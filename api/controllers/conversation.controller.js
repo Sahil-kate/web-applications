@@ -2,19 +2,36 @@ import createError from "../utils/createError.js";
 import Conversation from "../models/conversation.model.js";
 
 export const createConversation = async (req, res, next) => {
-  const newConversation = new Conversation({
-    id: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId,
-    sellerId: req.isSeller ? req.userId : req.body.to,
-    buyerId: req.isSeller ? req.body.to : req.userId,
-    readBySeller: req.isSeller,
-    readByBuyer: !req.isSeller,
-  });
-
   try {
+    if (!req.body.to) {
+      return next(createError(400, "Recipient ID is required"));
+    }
+
+    // Check if conversation already exists
+    const existingConversation = await Conversation.findOne({
+      $or: [
+        { id: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId },
+        { id: req.isSeller ? req.body.to + req.userId : req.userId + req.body.to }
+      ]
+    });
+
+    if (existingConversation) {
+      return res.status(200).send(existingConversation);
+    }
+
+    const newConversation = new Conversation({
+      id: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId,
+      sellerId: req.isSeller ? req.userId : req.body.to,
+      buyerId: req.isSeller ? req.body.to : req.userId,
+      readBySeller: req.isSeller,
+      readByBuyer: !req.isSeller,
+    });
+
     const savedConversation = await newConversation.save();
     res.status(201).send(savedConversation);
   } catch (err) {
-    next(err);
+    console.error("Error creating conversation:", err);
+    next(createError(500, "Error creating conversation"));
   }
 };
 

@@ -1,51 +1,76 @@
 import React from "react";
+import { motion } from "framer-motion";
 import "./Footer.scss";
 
 function Footer() {
   return (
-    <div className="footer">
+    <motion.div 
+      className="footer"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container">
-        
-        
-          
-        
-        
         <hr />
         <div className="bottom">
-          <div className="left">
+          <motion.div 
+            className="left"
+            initial={{ x: -20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <h2>fiverr</h2>
-            <span>© Fiverr . 2025</span>
-          </div>
-          <div className="right">
+            <span>© Fiverr International Ltd. {new Date().getFullYear()}</span>
+          </motion.div>
+          <motion.div 
+            className="right"
+            initial={{ x: 20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <div className="social">
-              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
-                <img src="/img/twitter.png" alt="Twitter" />
-              </a>
-              <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer">
-                <img src="/img/facebook.png" alt="Facebook" />
-              </a>
-              <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">
-                <img src="/img/linkedin.png" alt="LinkedIn" />
-              </a>
-              <a href="https://pinterest.com/" target="_blank" rel="noopener noreferrer">
-                <img src="/img/pinterest.png" alt="Pinterest" />
-              </a>
-              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer">
-                <img src="/img/instagram.png" alt="Instagram" />
-              </a>
+              {[
+                { icon: "twitter.png", url: "https://twitter.com/" },
+                { icon: "facebook.png", url: "https://facebook.com/" },
+                { icon: "linkedin.png", url: "https://linkedin.com/" },
+                { icon: "pinterest.png", url: "https://pinterest.com/" },
+                { icon: "instagram.png", url: "https://instagram.com/" }
+              ].map((social, index) => (
+                <motion.a
+                  key={social.icon}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -3, scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <img src={`/img/${social.icon}`} alt={social.icon.split('.')[0]} />
+                </motion.a>
+              ))}
             </div>
-            <div className="link">
-              <img src="/img/language.png" alt="" />
+            <motion.div 
+              className="link"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <img src="/img/language.png" alt="language" />
               <span>English</span>
-            </div>
-            <div className="link">
-              <img src="/img/coin.png" alt="" />
+            </motion.div>
+            <motion.div 
+              className="link"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <img src="/img/coin.png" alt="currency" />
               <span>USD</span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

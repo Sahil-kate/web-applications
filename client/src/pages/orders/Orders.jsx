@@ -16,22 +16,39 @@ const Orders = () => {
     queryKey: ["orders"],
     queryFn: async () => {
       try {
-        const res = await newRequest.get(`/orders`);
-        console.log("Fetched orders:", res.data); // Debug log
+        // Check if user is logged in
+        if (!currentUser?.token) {
+          toast.error("Please login to view orders");
+          navigate("/login");
+          return [];
+        }
+
+        const res = await newRequest.get(`/orders`, {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`
+          }
+        });
+        
         return res.data;
       } catch (err) {
-        console.error("❌ Error fetching orders:", err.response?.data || err.message);
+        console.error("❌ Error fetching orders:", err.response?.data || err);
+        if (err.response?.status === 401) {
+          toast.error("Session expired. Please login again.");
+          navigate("/login");
+          return [];
+        }
         throw err;
       }
     },
+    enabled: !!currentUser // Only run query if user is logged in
   });
 
   const handleContact = async (order) => {
     try {
-      console.log("Clicked order:", order); // Debug log
-      console.log("Current user:", currentUser); // Debug log
+      console.log("Clicked order:", order);
+      console.log("Current user:", currentUser);
 
-      if (!currentUser) {
+      if (!currentUser?.token) {
         toast.error("Please login to send messages");
         navigate("/login");
         return;
@@ -39,24 +56,64 @@ const Orders = () => {
 
       setLoadingContact(order._id);
 
-      // Get the seller ID directly from the order
-      const sellerId = order.gigId?.userId || order.sellerId;
-      console.log("Seller ID:", sellerId); // Debug log
+      // Determine the other user's ID (if current user is seller, get buyer, and vice versa)
+      let otherUserId;
+      if (currentUser.isSeller) {
+        otherUserId = order.buyerId?._id || order.buyerId;
+      } else {
+        otherUserId = order.gigId?.userId || order.sellerId;
+      }
 
-      if (!sellerId) {
-        toast.error("Could not find seller information");
+      console.log("Other user ID:", otherUserId);
+
+      if (!otherUserId) {
+        toast.error("Could not find user information");
         return;
       }
 
-      // Create a new conversation
-      const res = await newRequest.post("/conversations", {
-        to: sellerId,
-        orderId: order._id
-      });
+      // Add auth headers for all requests
+      const headers = {
+        Authorization: `Bearer ${currentUser.token}`
+      };
 
-      console.log("Conversation response:", res.data); // Debug log
+      // First check if a conversation already exists
+      try {
+        const conversations = await newRequest.get("/conversations", { headers });
+        const existingConv = conversations.data.find(
+          (conv) => (conv.sellerId === otherUserId || conv.buyerId === otherUserId)
+        );
+
+        if (existingConv) {
+          navigate(`/message/${existingConv.id}`);
+          return;
+        }
+      } catch (err) {
+        console.error("Error checking existing conversations:", err);
+        if (err.response?.status === 401) {
+          toast.error("Session expired. Please login again.");
+          navigate("/login");
+          return;
+        }
+      }
+
+      // Create a new conversation
+      const res = await newRequest.post("/conversations", 
+        { to: otherUserId },
+        { headers }
+      );
+
+      console.log("Conversation response:", res.data);
 
       if (res.data && res.data.id) {
+        // Create initial message
+        await newRequest.post("/messages", 
+          {
+            conversationId: res.data.id,
+            desc: `Hello! I would like to discuss order #${order._id}`
+          },
+          { headers }
+        );
+
         navigate(`/message/${res.data.id}`);
       } else {
         toast.error("Could not start conversation");
@@ -64,7 +121,12 @@ const Orders = () => {
 
     } catch (err) {
       console.error("Error creating conversation:", err);
-      toast.error(err.response?.data?.message || "Failed to start conversation");
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+        navigate("/login");
+      } else {
+        toast.error(err.response?.data?.message || "Failed to start conversation");
+      }
     } finally {
       setLoadingContact(null);
     }

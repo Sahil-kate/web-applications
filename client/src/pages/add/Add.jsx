@@ -136,6 +136,9 @@ const Add = () => {
         });
 
         return response.data;
+      } catch (error) {
+        console.error("Error in mutation:", error.response?.data || error.message);
+        throw error;
       } finally {
         setUploading(false);
       }
@@ -146,14 +149,27 @@ const Add = () => {
       navigate("/mygigs");
     },
     onError: (error) => {
-      console.error("Failed to create gig:", error);
-      toast.error(error.response?.data?.message || "Failed to create gig!");
+      const errorMessage = error.response?.data?.message || error.message || "Failed to create gig!";
+      toast.error(errorMessage);
+      
+      // If unauthorized, redirect to login
+      if (error.response?.status === 401) {
+        navigate("/login");
+      }
     },
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Check if user is logged in
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+      toast.error("Please log in to create a gig");
+      navigate("/login");
+      return;
+    }
+
     if (!validateForm()) {
       return;
     }
@@ -183,12 +199,10 @@ const Add = () => {
               <option value="">Select a category</option>
               <option value="design">Design</option>
               <option value="web">Web Development</option>
-              <option value="animation">Animation</option>
-              <option value="music">Music</option>
               <option value="ai">AI Services</option>
-              <option value="marketing">Digital Marketing</option>
-              <option value="writing">Writing & Translation</option>
+              <option value="music">Music & Audio</option>
               <option value="video">Video & Animation</option>
+              <option value="marketing">Digital Marketing</option>
             </select>
             <div className="images">
               <div className="imagesInputs">

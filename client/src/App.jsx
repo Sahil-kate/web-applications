@@ -22,29 +22,18 @@ import Success from "./pages/success/Success";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ChatBot from "./components/chatbot/ChatBot";
-
-// ErrorBoundary component
-class ErrorBoundary extends React.Component {
-  state = { hasError: false };
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, info) {
-    console.error("Error caught in boundary:", error, info);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <div>Oops! Something went wrong.</div>;
-    }
-    return this.props.children;
-  }
-}
+import ErrorBoundary from "./components/errorBoundary/ErrorBoundary";
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        refetchOnWindowFocus: false,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+      },
+    },
+  });
 
   const Layout = () => {
     return (
@@ -54,18 +43,6 @@ function App() {
           <Outlet />
           <Footer />
           <ChatBot />
-          <ToastContainer
-            position="bottom-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
         </QueryClientProvider>
       </div>
     );
@@ -130,7 +107,21 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 }

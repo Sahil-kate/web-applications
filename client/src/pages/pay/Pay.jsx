@@ -22,22 +22,25 @@ const Pay = () => {
   useEffect(() => {
     const initializePayment = async () => {
       try {
-        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        // Get current user from localStorage
+        const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+        const token = localStorage.getItem("token");
         
-        if (!currentUser?._id || !currentUser?.token) {
+        // Check if user is logged in
+        if (!currentUser?._id || (!currentUser?.token && !token)) {
           toast.error("Please login to proceed with payment");
           localStorage.setItem("redirectAfterLogin", `/pay/${id}`);
           navigate("/login");
           return;
         }
 
-        // Set authorization header with token
+        // Initialize payment intent
         const res = await newRequest.post(
           `/orders/create-payment-intent/${id}`,
           {},
           {
             headers: {
-              Authorization: `Bearer ${currentUser.token}`
+              Authorization: `Bearer ${currentUser?.token || token}`
             }
           }
         );

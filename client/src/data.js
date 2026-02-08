@@ -1,59 +1,66 @@
 export const cards = [
   {
     id: 1,
-    title: "AI Artists",
-    desc: "Add talent to AI",
+    title: "Animation",
+    desc: "Bring your ideas to life",
     img: "https://images.pexels.com/photos/7532110/pexels-photo-7532110.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "aiArtist"
+    cat: "animation"
   },
   {
     id: 2,
-    title: "Logo Design",
-    desc: "Build yor brand",
+    title: "Web Development",
+    desc: "Build your digital presence",
     img: "https://images.pexels.com/photos/11295165/pexels-photo-11295165.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "logoDesign"
+    cat: "web"
   },
   {
     id: 3,
-    title: "WordPress",
-    desc: "Customize your site",
+    title: "Video Production",
+    desc: "Create engaging content",
     img: "https://images.pexels.com/photos/4371669/pexels-photo-4371669.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "wordpress"
+    cat: "video"
   },
   {
     id: 4,
-    title: "Voice Over",
-    desc: "Share your message",
+    title: "Video Explainers",
+    desc: "Explain with impact",
     img: "https://images.pexels.com/photos/7608079/pexels-photo-7608079.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "voiceOver"
-  },
-  {
-    id: 5,
-    title: "Video Explainer",
-    desc: "Engage your audience",
-    img: "https://images.pexels.com/photos/13388047/pexels-photo-13388047.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
     cat: "videoExplainer"
   },
   {
+    id: 5,
+    title: "Voice Over",
+    desc: "Share your message",
+    img: "https://images.pexels.com/photos/7608079/pexels-photo-7608079.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    cat: "music"
+  },
+  {
     id: 6,
-    title: "Social Media",
-    desc: "Reach more customers",
-    img: "https://images.pexels.com/photos/11378899/pexels-photo-11378899.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "socialMedia"
+    title: "Video Explainer",
+    desc: "Engage your audience",
+    img: "https://images.pexels.com/photos/13388047/pexels-photo-13388047.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    cat: "video"
   },
   {
     id: 7,
-    title: "SEO",
-    desc: "Unlock growth online",
-    img: "https://images.pexels.com/photos/4820241/pexels-photo-4820241.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "seo"
+    title: "Social Media",
+    desc: "Reach more customers",
+    img: "https://images.pexels.com/photos/11378899/pexels-photo-11378899.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    cat: "marketing"
   },
   {
     id: 8,
+    title: "SEO",
+    desc: "Unlock growth online",
+    img: "https://images.pexels.com/photos/4820241/pexels-photo-4820241.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    cat: "marketing"
+  },
+  {
+    id: 9,
     title: "Illustration",
     desc: "Color you dreams",
     img: "https://images.pexels.com/photos/15032623/pexels-photo-15032623.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    cat: "illustration"
+    cat: "design"
   },
 ];
 

@@ -4,7 +4,6 @@ import newRequest from "../../utils/newRequest";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Navbar.scss";
-import { ToastContainer } from "react-toastify";
 
 function Navbar() {
   const [active, setActive] = useState(false);
@@ -64,9 +63,9 @@ function Navbar() {
             <span className="dot">.</span>
           </div>
           <div className="links">
-            <span>Fiverr Business</span>
-            <a href=""><span>Explore</span></a>
-            <span>English</span>
+            <Link to="/gigs" className="link">
+              <span>Explore</span>
+            </Link>
             {!currentUser?.isSeller && currentUser?.canBeSeller && (
               <span onClick={handleBecomeSeller} style={{ cursor: "pointer" }}>
                 Become a Seller
@@ -139,31 +138,31 @@ function Navbar() {
           <>
             <hr />
             <div className="menu">
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=design">
                 Graphics & Design
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=video">
                 Video & Animation
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=writing">
                 Writing & Translation
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=ai">
                 AI Services
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=marketing">
                 Digital Marketing
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=music">
                 Music & Audio
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=web">
                 Programming & Tech
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=business">
                 Business
               </Link>
-              <Link className="link menuLink" to="/">
+              <Link className="link menuLink" to="/gigs?cat=lifestyle">
                 Lifestyle
               </Link>
             </div>
@@ -171,7 +170,6 @@ function Navbar() {
           </>
         )}
       </div>
-      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }

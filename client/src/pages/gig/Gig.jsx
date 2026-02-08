@@ -59,9 +59,10 @@ function Gig() {
   const isOwnGig = currentUser && currentUser._id === gigData?.userId;
 
   const handleContinueClick = () => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+    const token = localStorage.getItem("token");
 
-    if (!currentUser) {
+    if (!currentUser?._id || (!currentUser?.token && !token)) {
       toast.error("Please log in first to proceed with the payment!", {
         position: "top-center",
         autoClose: 3000,

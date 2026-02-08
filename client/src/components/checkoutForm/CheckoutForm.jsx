@@ -6,6 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import newRequest from "../../utils/newRequest";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -25,30 +26,26 @@ const CheckoutForm = () => {
       return;
     }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
-    if (!clientSecret) return;
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      const gigId = localStorage.getItem("gigId");
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          navigate(`/success?payment_intent=${paymentIntent.id}&gig_id=${gigId}`);
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Please provide your payment details.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
+    // Verify token is still valid
+    const verifyToken = async () => {
+      try {
+        await newRequest.get("/users/me", {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`
+          }
+        });
+      } catch (err) {
+        if (err.response?.status === 401) {
+          localStorage.removeItem("currentUser");
+          localStorage.removeItem("token");
+          toast.error("Session expired. Please login again.");
+          navigate("/login");
+          return;
+        }
       }
-    });
+    };
+
+    verifyToken();
   }, [stripe, navigate]);
 
   const handleSubmit = async (e) => {

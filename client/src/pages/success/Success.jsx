@@ -41,11 +41,6 @@ const Success = () => {
           {
             gigId,
             paymentIntentId
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`
-            }
           }
         );
 
@@ -62,11 +57,12 @@ const Success = () => {
         setTimeout(() => navigate("/orders"), 2000);
 
       } catch (err) {
-        const errorMessage = err.response?.data?.message || err.message;
+        console.error("Order confirmation error:", err);
+        const errorMessage = err.response?.data?.error || err.response?.data?.message || err.message;
         setError(errorMessage);
         toast.error(errorMessage);
         
-        if (err.message.includes("Authentication required")) {
+        if (err.message.includes("Authentication required") || err.response?.status === 401) {
           localStorage.setItem("redirectAfterLogin", window.location.pathname + window.location.search);
           setTimeout(() => navigate("/login"), 2000);
         }

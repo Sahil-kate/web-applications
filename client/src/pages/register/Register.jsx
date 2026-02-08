@@ -3,9 +3,10 @@ import upload from "../../utils/upload";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { toast, ToastContainer } from "react-toastify";  
-import "react-toastify/dist/ReactToastify.css";  
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Register.scss";
+import { validateField, validationRules } from "../../utils/validationService";
 
 function Register() {
   const [file, setFile] = useState(null);
@@ -21,10 +22,26 @@ function Register() {
     phone: "",
   });
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value, type, checked } = e.target;
+    setUser((prev) => {
+      return {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
+
+    // Validate field on change
+    if (name === 'password' || name === 'username' || name === 'email') {
+      const validation = validateField(value, validationRules.user[name]);
+      setErrors(prev => ({
+        ...prev,
+        [name]: validation.errors[0] || ''
+      }));
+    }
   };
 
   const handleSeller = (e) => {
@@ -46,20 +63,32 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate all required fields before submission
+    const validationErrors = {};
+    ['username', 'email', 'password'].forEach(field => {
+      const validation = validateField(user[field], validationRules.user[field]);
+      if (!validation.isValid) {
+        validationErrors[field] = validation.errors[0];
+      }
+    });
 
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      toast.error("Please fix the validation errors");
+      return;
+    }
 
     if (!user.username || !user.email || !user.password || !user.country || !user.phone || !user.desc) {
       toast.error("❌ Please fill out all required fields.");
       return;
     }
 
-  
     const loadingToastId = toast.loading("🔍 Verifying details...");
     
     try {
       setLoading(true);
 
-  
       let imageUrl = "";
       if (file) {
         toast.update(loadingToastId, {
@@ -83,9 +112,7 @@ function Register() {
 
       const updatedUser = { ...user, img: imageUrl };
 
-
       await newRequest.post("/auth/register", updatedUser);
-
 
       toast.update(loadingToastId, {
         render: "🎉 Account created successfully!",
@@ -128,46 +155,58 @@ function Register() {
     <motion.div className="register" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <form onSubmit={handleSubmit}>
         <div className="left">
-          <h1>Join Our Platform</h1>
-          <label>Username</label>
-          <input 
-            name="username" 
-            type="text" 
-            placeholder="johndoe" 
-            onChange={handleChange} 
-            required 
-          />
-          <label>Email</label>
-          <input 
-            name="email" 
-            type="email" 
-            placeholder="email@example.com" 
-            onChange={handleChange} 
-            required 
-          />
-          <label>Password</label>
-          <input 
-            name="password" 
-            type="password" 
-            onChange={handleChange} 
-            required 
-          />
-          <label>Profile Picture</label>
-          <input 
-            type="file" 
-            onChange={handleFileChange} 
-          />
-          <label>Country</label>
-          <input 
-            name="country" 
-            type="text" 
-            placeholder="USA" 
-            onChange={handleChange} 
-            required 
-          />
+          <h1>Create a new account</h1>
+          <label htmlFor="">Username</label>
+          <div className="input-group">
+            <input
+              name="username"
+              type="text"
+              placeholder="johndoe"
+              onChange={handleChange}
+              required
+            />
+            {errors.username && <span className="error">{errors.username}</span>}
+          </div>
+          <label htmlFor="">Email</label>
+          <div className="input-group">
+            <input
+              name="email"
+              type="email"
+              placeholder="email@example.com"
+              onChange={handleChange}
+              required
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
+          <label htmlFor="">Password</label>
+          <div className="input-group">
+            <input
+              name="password"
+              type="password"
+              onChange={handleChange}
+              required
+            />
+            {errors.password && <span className="error">{errors.password}</span>}
+          </div>
+          <label htmlFor="">Profile Picture</label>
+          <div className="input-group">
+            <input type="file" onChange={handleFileChange} />
+            {errors.img && <span className="error">{errors.img}</span>}
+          </div>
+          <label htmlFor="">Country</label>
+          <div className="input-group">
+            <input
+              name="country"
+              type="text"
+              placeholder="USA"
+              onChange={handleChange}
+              required
+            />
+            {errors.country && <span className="error">{errors.country}</span>}
+          </div>
           <button 
             type="submit" 
-            disabled={loading} 
+            disabled={loading}
             className={loading ? "loading" : ""}
           >
             {loading ? "Signing Up..." : "Sign Up"}
@@ -201,9 +240,6 @@ function Register() {
           ></textarea>
         </div>
       </form>
-
-      {/* ToastContainer to show toast messages */}
-      <ToastContainer />
     </motion.div>
   );
 }

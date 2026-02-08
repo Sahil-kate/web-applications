@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.scss";
 import Featured from "../../components/featured/Featured";
+import TrustedBy from "../../components/trustedBy/TrustedBy";
 import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import ProjectCard from "../../components/projectCard/ProjectCard";
@@ -15,150 +16,173 @@ const containerVariants = {
   },
 };
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 }
+  }
+};
+
 function Home() {
   return (
-    <div className="home">
+    <motion.div 
+      className="home"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       <Featured />
-      {/* <TrustedBy /> */}
+      <TrustedBy />
       
       <Slide slidesToShow={5} arrowsScroll={5}>
         {cards.map((card) => (
           <CatCard key={card.id} card={card} />
         ))}
       </Slide>
-      <div className="features">
-        <div className="container">
-          <div className="item">
-            <h1>A whole world of freelance talent at your fingertips</h1>
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              The best for every budget
-            </div>
-            <p>
-              Find high-quality services at every price point. No hourly rates,
-              just project-based pricing.
-            </p>
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              Quality work done quickly
-            </div>
-            <p>
-              Find the right freelancer to begin working on your project within
-              minutes.
-            </p>
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              Protected payments, every time
-            </div>
-            <p>
-              Always know what you will pay upfront. Your payment is not released
-              until you approve the work.
-            </p>
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              24/7 support
-            </div>
-            <p>
-              Find high-quality services at every price point. No hourly rates,
-              just project-based pricing.
-            </p>
-          </div>
-          <div className="item">
-            <video src="./img/video.mp4" controls />
-          </div>
-        </div>
-      </div>
-      <div className="explore">
-        <div className="container">
-          <h1>Explore the marketplace</h1>
-          <div className="items">
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/graphics-design.d32a2f8.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Graphics & Design</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/online-marketing.74e221b.svg"
-                alt=""
-              />
-              <div className="line"></div>
 
-              <span>Digital Marketing</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/writing-translation.32ebe2e.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Writing & Translation</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/video-animation.f0d9d71.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Video & Animation</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/music-audio.320af20.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Music & Audio</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/programming.9362366.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Programming & Tech</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/business.bbdf319.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Business</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/lifestyle.745b575.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Lifestyle</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/data.718910f.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Data</span>
-            </div>
-            <div className="item">
-              <img
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/photography.01cf943.svg"
-                alt=""
-              />
-              <div className="line"></div>
-              <span>Photography</span>
-            </div>
+      <motion.div 
+        className="features"
+        variants={itemVariants}
+      >
+        <div className="container">
+          <motion.div 
+            className="item"
+            variants={itemVariants}
+          >
+            <h1>A whole world of freelance talent at your fingertips</h1>
+            {[
+              {
+                title: "The best for every budget",
+                description: "Find high-quality services at every price point. No hourly rates, just project-based pricing."
+              },
+              {
+                title: "Quality work done quickly",
+                description: "Find the right freelancer to begin working on your project within minutes."
+              },
+              {
+                title: "Protected payments, every time",
+                description: "Always know what you will pay upfront. Your payment is not released until you approve the work."
+              },
+              {
+                title: "24/7 support",
+                description: "Find high-quality services at every price point. No hourly rates, just project-based pricing."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                custom={index}
+                whileHover={{ x: 10 }}
+              >
+                <div className="title">
+                  <img src="./img/check.png" alt="" />
+                  {item.title}
+                </div>
+                <p>{item.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+          <motion.div 
+            className="item"
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+          >
+            <video 
+              src="./img/video.mp4" 
+              autoPlay 
+              muted 
+              loop 
+              playsInline
+            />
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <motion.div 
+        className="explore"
+        variants={itemVariants}
+      >
+        <div className="container">
+          <motion.h1
+            variants={itemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            Explore the marketplace
+          </motion.h1>
+          <div className="items">
+            {[
+              {
+                icon: "graphics-design.d32a2f8.svg",
+                title: "Graphics & Design"
+              },
+              {
+                icon: "online-marketing.74e221b.svg",
+                title: "Digital Marketing"
+              },
+              {
+                icon: "writing-translation.32ebe2e.svg",
+                title: "Writing & Translation"
+              },
+              {
+                icon: "video-animation.f0d9d71.svg",
+                title: "Video & Animation"
+              },
+              {
+                icon: "music-audio.320af20.svg",
+                title: "Music & Audio"
+              },
+              {
+                icon: "programming.9362366.svg",
+                title: "Programming & Tech"
+              },
+              {
+                icon: "business.bbdf319.svg",
+                title: "Business"
+              },
+              {
+                icon: "lifestyle.745b575.svg",
+                title: "Lifestyle"
+              },
+              {
+                icon: "data.718910f.svg",
+                title: "Data"
+              },
+              {
+                icon: "photography.01cf943.svg",
+                title: "Photography"
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="item"
+                variants={itemVariants}
+                whileHover={{ y: -10 }}
+              >
+                <img
+                  src={`https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/${item.icon}`}
+                  alt={item.title}
+                />
+                <div className="line"></div>
+                <span>{item.title}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </div>
-      <div className="features dark">
+      </motion.div>
+
+      <motion.div 
+        className="features dark"
+        variants={itemVariants}
+      >
         <div className="container">
-          <div className="item">
+          <motion.div 
+            className="item"
+            variants={itemVariants}
+          >
             <h1>
               fiverr <i>business</i>
             </h1>
@@ -169,36 +193,47 @@ function Home() {
               Upgrade to a curated experience packed with tools and benefits,
               dedicated to businesses
             </p>
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              Connect to freelancers with proven business experience
-            </div>
-
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              Get matched with the perfect talent by a customer success manager
-            </div>
-
-            <div className="title">
-              <img src="./img/check.png" alt="" />
-              Manage teamwork and boost productivity with one powerful workspace
-            </div>
-            <button>Explore Fiverr Business</button>
-          </div>
-          <div className="item">
+            {[
+              "Connect to freelancers with proven business experience",
+              "Get matched with the perfect talent by a customer success manager",
+              "Manage teamwork and boost productivity with one powerful workspace"
+            ].map((text, index) => (
+              <motion.div 
+                key={index}
+                className="title"
+                variants={itemVariants}
+                whileHover={{ x: 10 }}
+              >
+                <img src="./img/check.png" alt="" />
+                {text}
+              </motion.div>
+            ))}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Explore Fiverr Business
+            </motion.button>
+          </motion.div>
+          <motion.div 
+            className="item"
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+          >
             <img
               src="https://fiverr-res.cloudinary.com/q_auto,f_auto,w_870,dpr_2.0/v1/attachments/generic_asset/asset/d9c17ceebda44764b591a8074a898e63-1599597624768/business-desktop-870-x2.png"
-              alt=""
+              alt="Fiverr Business"
             />
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
+
       <Slide slidesToShow={4} arrowsScroll={4}>
         {projects.map((card) => (
           <ProjectCard key={card.id} card={card} />
         ))}
       </Slide>
-    </div>
+    </motion.div>
   );
 }
 

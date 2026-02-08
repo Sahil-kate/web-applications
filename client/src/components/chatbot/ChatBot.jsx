@@ -20,18 +20,12 @@ const ChatBot = () => {
             </button>
           </div>
           <iframe
-            src="https://www.chatbase.co/chatbot-iframe/rr3Utl18ifRiZxGaPgw30"
+            src="https://app.thinkstack.ai/bot/index.html?chatbot_id=67fe12a27c7ebf21c5b0bd32&type=inline"
+            frameBorder="0"
             width="100%"
             height="100%"
-            frameBorder="0"
-            allowFullScreen
-            style={{
-              width: '100%',
-              height: '450px',
-              border: 'none',
-              borderRadius: '0 0 10px 10px',
-            }}
-          ></iframe>
+            style={{ minHeight: "500px" }}
+          />
         </>
       ) : (
         <button onClick={toggleChat} className="chat-toggle-button">

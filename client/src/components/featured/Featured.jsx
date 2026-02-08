@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import "./Featured.scss";
 
+const images = [
+  {
+    url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&auto=format&fit=crop&q=60",
+    title: "Team Collaboration"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600&auto=format&fit=crop&q=60",
+    title: "Professional Workspace"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop&q=60",
+    title: "Digital Solutions"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&auto=format&fit=crop&q=60",
+    title: "Modern Office"
+  }
+];
+
 function Featured() {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleSearch = () => {
     if (input.trim() !== "") {
@@ -24,6 +44,14 @@ function Featured() {
     navigate(`/gigs?search=${category}`);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % images.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <motion.div 
       className="featured"
@@ -31,6 +59,17 @@ function Featured() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      <div className="slider-container">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`slide ${index === currentSlide ? "active" : ""}`}
+            style={{ backgroundImage: `url(${image.url})` }}
+          />
+        ))}
+        <div className="background-overlay" />
+      </div>
+      
       <div className="container">
         {/* Left Section */}
         <motion.div
@@ -98,19 +137,7 @@ function Featured() {
         </motion.div>
 
         {/* Right Section (Image) */}
-        <motion.div
-          className="right"
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.img
-            src="./img/man.png"
-            alt=""
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-          />
-        </motion.div>
+        
       </div>
     </motion.div>
   );

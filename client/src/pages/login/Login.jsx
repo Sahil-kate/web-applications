@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.scss";
 import newRequest from "../../utils/newRequest";
 import { useNavigate, useLocation } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
@@ -17,11 +17,9 @@ function Login() {
   const from = location.state?.from || "/";
 
   const handleSuccess = (data) => {
-    // Store both user data and token
-    localStorage.setItem("currentUser", JSON.stringify({
-      ...data.user,
-      token: data.token
-    }));
+    // Store user data and token separately
+    localStorage.setItem("currentUser", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
     
     // Check for redirect URL
     const redirectUrl = localStorage.getItem("redirectAfterLogin");
@@ -82,8 +80,6 @@ function Login() {
 
         {error && <p className="error-message">{error}</p>}
       </form>
-
-      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }

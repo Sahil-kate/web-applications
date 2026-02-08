@@ -61,45 +61,53 @@ export const intent = async (req, res) => {
  */
 export const confirm = async (req, res) => {
   try {
-    const { gigId, paymentIntentId } = req.body;
+    console.log("🔄 Starting order confirmation process");
+    console.log("Request body:", req.body);
+    console.log("User ID:", req.userId);
 
-    console.log("🔄 Starting order confirmation process:", {
-      gigId,
-      paymentIntentId,
-      userId: req.userId
-    });
+    const { gigId, paymentIntentId } = req.body;
 
     // Validate required fields
     if (!req.userId) {
+      console.error("❌ Unauthorized access - No user ID");
       return res.status(403).json({ error: "Unauthorized access!" });
     }
 
     if (!gigId || !paymentIntentId) {
-      return res.status(400).json({ error: "Missing gigId or paymentIntentId" });
+      console.error("❌ Missing required fields:", { gigId, paymentIntentId });
+      return res.status(400).json({ 
+        error: "Missing required fields",
+        details: !gigId ? "gigId is required" : "paymentIntentId is required"
+      });
     }
 
     // Verify payment intent
+    console.log("🔍 Retrieving payment intent:", paymentIntentId);
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
     console.log("Payment intent status:", paymentIntent.status);
     
     if (!paymentIntent) {
+      console.error("❌ Invalid payment intent");
       return res.status(400).json({ error: "Invalid payment intent." });
     }
 
     if (paymentIntent.status !== "succeeded") {
+      console.error("❌ Payment not successful:", paymentIntent.status);
       return res.status(400).json({ 
         error: `Payment is not successful. Status: ${paymentIntent.status}` 
       });
     }
 
     // Get gig details
+    console.log("🔍 Retrieving gig:", gigId);
     const gig = await Gig.findById(gigId);
     if (!gig) {
       console.error("❌ Gig not found:", gigId);
       return res.status(404).json({ error: "Gig not found!" });
     }
 
-    // Create or update order using findOneAndUpdate
+    // Create or update order
+    console.log("📝 Creating/updating order");
     const orderData = {
       gigId: gig._id,
       title: gig.title,
@@ -112,12 +120,12 @@ export const confirm = async (req, res) => {
     };
 
     const savedOrder = await Order.findOneAndUpdate(
-      { paymentIntentId }, // find by payment intent
-      orderData, // update data
+      { paymentIntentId },
+      orderData,
       { 
-        new: true, // return updated document
-        upsert: true, // create if doesn't exist
-        setDefaultsOnInsert: true // use schema defaults for new documents
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true
       }
     );
 
@@ -130,6 +138,30 @@ export const confirm = async (req, res) => {
 
   } catch (error) {
     console.error("❌ Order Confirmation Error:", error);
+    console.error("Error stack:", error.stack);
+    
+    // Handle specific error types
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        error: "Validation error",
+        details: error.message
+      });
+    }
+    
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        error: "Invalid data format",
+        details: error.message
+      });
+    }
+
+    if (error.type === 'StripeInvalidRequestError') {
+      return res.status(400).json({
+        error: "Invalid payment information",
+        details: error.message
+      });
+    }
+
     res.status(500).json({
       error: "Failed to confirm order.",
       details: error.message,

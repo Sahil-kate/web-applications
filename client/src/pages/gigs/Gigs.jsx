@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Gigs.scss";
 import GigCard from "../../components/gigCard/GigCard";
 import { useQuery } from "@tanstack/react-query";
-import newRequest from "../../utils/newRequest";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Loader from "../../components/loader/Loader";
 import { FiChevronDown } from "react-icons/fi";
+import apiService from "../../utils/apiService";
 
 function Gigs() {
   const [sort, setSort] = useState("sales");
@@ -15,16 +15,48 @@ function Gigs() {
   const maxRef = useRef();
   const menuRef = useRef();
   const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const currentCategory = params.get("cat");
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["gigs"],
-    queryFn: () =>
-      newRequest
-        .get(
-          `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`
-        )
-        .then((res) => res.data),
+    queryKey: ["gigs", currentCategory, sort],
+    queryFn: async () => {
+      const queryParams = {
+        ...(currentCategory && { cat: currentCategory }),
+        ...(minRef.current?.value && { min: minRef.current.value }),
+        ...(maxRef.current?.value && { max: maxRef.current.value }),
+        ...(sort && { sort }),
+      };
+      console.log('Fetching gigs with params:', queryParams);
+      try {
+        const response = await apiService.gigs.getAll(queryParams);
+        console.log('API Response:', response);
+        return response;
+      } catch (err) {
+        console.error('Error fetching gigs:', err);
+        console.error('Error details:', {
+          message: err.message,
+          response: err.response?.data,
+          status: err.response?.status
+        });
+        throw err;
+      }
+    },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
+
+  useEffect(() => {
+    console.log('Query results:', { 
+      isLoading, 
+      error: error ? {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      } : null, 
+      dataLength: data?.length,
+      data 
+    });
+  }, [isLoading, error, data]);
 
   const reSort = (type) => {
     setSort(type);
@@ -47,7 +79,7 @@ function Gigs() {
 
   useEffect(() => {
     refetch();
-  }, [sort]);
+  }, [sort, currentCategory]);
 
   const apply = () => {
     refetch();
@@ -69,10 +101,10 @@ function Gigs() {
     >
       <div className="container">
         <motion.span className="breadcrumbs" initial={{ x: -50 }} animate={{ x: 0 }}>
-          Fiverr &gt; Gigs
+          Fiverr &gt; {currentCategory || "All Categories"}
         </motion.span>
         <motion.h1 initial={{ y: -20 }} animate={{ y: 0 }}>
-          {data?.cat || "Category"}
+          {currentCategory ? `${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Gigs` : "All Gigs"}
         </motion.h1>
         <motion.p initial={{ y: 20 }} animate={{ y: 0 }}>
           Explore the boundaries of art and technology with Fiverr AI artists
@@ -146,7 +178,16 @@ function Gigs() {
           {isLoading ? (
             <Loader />
           ) : error ? (
-            <span>Something went wrong!</span>
+            <div className="error-message">
+              <h3>Something went wrong!</h3>
+              <p>{error.message}</p>
+              <button onClick={() => refetch()}>Try Again</button>
+            </div>
+          ) : data?.length === 0 ? (
+            <div className="no-results">
+              <h3>No gigs found</h3>
+              <p>Try adjusting your search criteria or browse all categories</p>
+            </div>
           ) : (
             data?.map((gig) => (
               <motion.div 

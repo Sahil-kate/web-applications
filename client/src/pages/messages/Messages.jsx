@@ -63,13 +63,17 @@ const Messages = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <td className="user-info">
-                    {/* <img src={c.buyerAvatar || "/default-avatar.png"} alt="User" /> */}
-                    <h2>{currentUser.username}</h2>
-                    <span>{currentUser.isSeller ? c.buyerUsername : c.sellerUsername}</span>
+                    <img 
+                      src={currentUser.isSeller ? c.buyerImg || "/img/noavatar.jpg" : c.sellerImg || "/img/noavatar.jpg"} 
+                      alt="User" 
+                    />
+                    <span>
+                      {currentUser.isSeller ? c.buyerUsername : c.sellerUsername}
+                    </span>
                   </td>
                   <td>
                     <Link to={`/message/${c.id}`} className="link">
-                      {c?.lastMessage?.substring(0, 50)}...
+                      {c?.lastMessage?.substring(0, 50)}{c?.lastMessage?.length > 50 ? "..." : ""}
                     </Link>
                   </td>
                   <td>{moment(c.updatedAt).fromNow()}</td>

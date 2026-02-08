@@ -37,14 +37,96 @@ function MyGigs() {
     enabled: !!currentUser?._id && currentUser.isSeller,
   });
 
-  const handleDelete = async (id) => {
-    try {
-      await newRequest.delete(`/gigs/${id}`);
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (gigId) => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Authentication required");
+        }
+        
+        console.log("Attempting to delete gig:", gigId);
+        const response = await newRequest.delete(`/gigs/${gigId}`);
+        console.log("Delete response:", response.data);
+        return response.data;
+      } catch (error) {
+        console.error("Delete error details:", {
+          status: error.response?.status,
+          message: error.response?.data?.message || error.message,
+          error
+        });
+        throw error;
+      }
+    },
+    onSuccess: (data) => {
+      console.log("Delete successful:", data);
+      queryClient.invalidateQueries(["myGigs", currentUser?._id]);
       toast.success("Gig deleted successfully!");
-      queryClient.invalidateQueries(["myGigs", currentUser._id]);
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Error deleting gig");
+    },
+    onError: (error) => {
+      console.error("Delete mutation error:", error);
+      const errorMessage = error.response?.data?.message || error.message || "Failed to delete gig";
+      toast.error(errorMessage);
+      
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    },
+  });
+
+  const handleDelete = (id) => {
+    if (!id) {
+      console.error("No gig ID provided for deletion");
+      toast.error("Invalid gig ID");
+      return;
     }
+
+    toast.info(
+      <div>
+        <p>Are you sure you want to delete this gig?</p>
+        <p style={{ fontSize: '0.8em', marginTop: '8px' }}>This action cannot be undone.</p>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px', gap: '8px' }}>
+          <button
+            onClick={() => toast.dismiss()}
+            style={{
+              padding: '6px 12px',
+              background: '#e4e6eb',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss();
+              deleteMutation.mutate(id);
+            }}
+            style={{
+              padding: '6px 12px',
+              background: '#ff4d4f',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
+      }
+    );
   };
 
   const handleGigClick = (gigId) => {
@@ -119,8 +201,9 @@ function MyGigs() {
                     <button 
                       className="delete-btn"
                       onClick={() => handleDelete(gig._id)}
+                      disabled={deleteMutation.isPending}
                     >
-                      <FiTrash2 /> Delete
+                      <FiTrash2 /> {deleteMutation.isPending ? "Deleting..." : "Delete"}
                     </button>
                   </td>
                 </tr>
