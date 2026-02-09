@@ -1,0 +1,107 @@
+General FAQs
+Question: What is this platform?
+Answer: This platform is an online marketplace that allows users to create and sell services, also known as "gigs." It's a space where buyers can find a wide range of services across different categories, and sellers can offer their skills and expertise to a global audience.
+
+Question: How does it work?
+Answer: To get started, users need to create an account. Sellers can then create gigs, which are detailed descriptions of the services they offer, including pricing and delivery time. Buyers can browse through these gigs, make purchases, and receive the services. Transactions are processed through the platform, and both buyers and sellers can rate and review each other.
+
+Question: Who can use this platform?
+Answer: This platform is open to anyone who wants to offer a service (as a seller) or purchase services (as a buyer). You need to create an account to access the full functionality. The platform welcomes individuals from various industries such as tech, design, writing, marketing, and more.
+
+Question: Is it free to join?
+Answer: Yes, signing up and creating an account is completely free. There are no fees associated with joining the platform, and users can list their services at no cost. However, there are service fees on completed transactions.
+
+Question: What are the benefits of using this platform?
+Answer: Users benefit from a global marketplace, the ability to work from anywhere, secure payment methods, and a wide array of service categories to choose from. Sellers can access detailed analytics to track their performance, and buyers can browse a large selection of services with reviews to guide their decision-making.
+
+Question: How secure is this platform?
+Answer: The platform uses encryption and secure payment gateways to protect user data and financial transactions. It also has a system in place to resolve disputes and ensures that users follow the platform’s community guidelines to maintain a safe environment.
+
+Creating a Gig
+Question: How do I create a gig?
+Answer: To create a gig, log into your account and go to the “Dashboard.” Click “Create a Gig” and fill in the required information. This includes a catchy title, detailed description of your service, your pricing, and the category that best fits your gig. You can also upload images or videos to make your gig more appealing.
+
+Question: What information do I need to provide when creating a gig?
+Answer: You’ll need to provide a clear and descriptive title, a comprehensive description that explains what the service includes, the pricing, expected delivery time, and relevant images or videos. Additional details like “gig extras” and tags that help buyers find your service can also be added.
+
+Question: Can I edit or delete a gig after publishing it?
+Answer: Yes, you can make changes to your gig after publishing it. Go to your “Gigs” section on your dashboard, select the gig you wish to edit, and make the necessary changes. You can also delete a gig if you no longer wish to offer that service.
+
+Question: How do I make my gig stand out?
+Answer: To make your gig stand out, ensure your title is clear and catchy. Provide a detailed description and include high-quality images or videos showcasing your work. You can also offer additional services as “gig extras” or set competitive prices to attract more buyers. Regularly update your gig and respond quickly to inquiries.
+
+Question: What happens if my gig is rejected?
+Answer: If your gig is rejected, you’ll receive a notification explaining the reason. Common reasons for rejection include poor quality of images, violating platform guidelines, or unclear service descriptions. You can fix the issues mentioned and resubmit your gig for review.
+
+Question: How long does it take for my gig to get approved?
+Answer: Typically, gigs are reviewed within 24 to 48 hours. If there are no issues, it will be approved and listed on the platform. In case of any issues, you’ll receive feedback on what needs to be corrected.
+
+Question: Can I offer multiple gigs at once?
+Answer: Yes, you can create and offer as many gigs as you want, provided they follow the platform’s guidelines. Offering multiple gigs allows you to target different customer needs and increase your chances of making sales.
+
+Buying Services
+Question: How do I find services on the platform?
+Answer: To find services, you can use the search bar and enter relevant keywords. You can also filter results by category, price range, delivery time, and seller rating. Browsing through the “Top Rated” section or checking featured gigs might help you find high-quality services.
+
+Question: How do I contact a seller?
+Answer: To contact a seller, visit their gig page and click the “Contact Seller” button. You can then send a message directly through the platform’s messaging system. Make sure to be clear about your needs and expectations.
+
+Question: What should I do if I’m not satisfied with the service?
+Answer: If you’re not satisfied, you should first try to resolve the issue by contacting the seller directly. Most sellers are open to making revisions or offering refunds. If the issue is unresolved, you can escalate the matter by contacting customer support for further assistance.
+
+Question: Can I request revisions?
+Answer: Yes, many sellers offer revision options as part of their services. You can request revisions by sending a message to the seller, explaining what changes are needed. If revisions are included in the service, they should be part of your agreement with the seller.
+
+Question: How do I leave feedback for a seller?
+Answer: After receiving the service, you’ll be prompted to leave feedback. You can rate the seller on a scale from 1 to 5 stars, and leave a detailed review describing your experience. This helps other buyers make informed decisions and encourages sellers to improve.
+
+Payments and Pricing
+Question: How much does it cost to create a gig?
+Answer: It is free to create and list a gig. However, the platform may charge a service fee once the gig is sold. These fees are deducted from the total payment you receive from the buyer.
+
+Question: What payment methods are accepted?
+Answer: The platform supports various payment methods, including credit/debit cards, PayPal, and other secure online payment systems. Make sure to check your region’s available payment options.
+
+Question: When do I get paid for my services?
+Answer: Payment is processed once the buyer marks the order as complete. The funds are then held for a standard processing time (usually 3–5 business days), after which the seller can withdraw the payment to their chosen payment method.
+
+Question: Are there any fees for using the platform?
+Answer: Yes, there is a service fee on each transaction. This fee is automatically deducted from the amount you earn once a transaction is completed. The fee percentage varies depending on the platform's terms and conditions.
+
+Question: How do I withdraw my earnings?
+Answer: To withdraw your earnings, go to your account settings and select the "Withdraw Earnings" option. You can choose from various payment methods, such as bank transfer or PayPal. Ensure your payment settings are up to date to avoid any delays.
+
+Question: Are there any hidden fees?
+Answer: No, the platform is transparent about its fees. All fees associated with transactions, withdrawals, and other services are disclosed upfront. Always check the payment breakdown before confirming a transaction.
+
+Account Management
+Question: How do I update my profile?
+Answer: To update your profile, log into your account and click on your profile icon. From here, you can edit your name, profile picture, and bio. Ensure your profile is professional and reflects your skills or interests.
+
+Question: How do I reset my password?
+Answer: If you forget your password, click the “Forgot Password” link on the login page. Enter your registered email address, and you’ll receive a link to reset your password. Follow the instructions to create a new one.
+
+Question: Can I delete my account?
+Answer: Yes, you can delete your account. Navigate to your account settings and select "Delete Account." Be aware that this is a permanent action, and all your data and gigs will be removed from the platform.
+
+Question: How do I change my payment settings?
+Answer: You can update your payment methods by going to the "Payment Settings" section in your account settings. Add or update your PayPal email, bank account details, or any other preferred payment method.
+
+Question: What should I do if my account is suspended?
+Answer: If your account is suspended, you will be notified with a reason for the suspension. You can contact customer support to resolve the issue, whether it’s related to violating platform guidelines or another reason.
+
+Troubleshooting
+Question: I can’t log in to my account. What should I do?
+Answer: If you're unable to log in, double-check that you're entering the correct username and password. If you've forgotten your password, use the "Forgot Password" link to reset it. If issues persist, contact customer support.
+
+Question: Why was my gig rejected?
+Answer: Gigs are usually rejected due to non-compliance with platform guidelines, poor image quality, or unclear descriptions. Check the notification you received for details and update your gig accordingly before resubmitting.
+
+Question: How do I report a problem?
+Answer: If you encounter any issues, go to the "Help & Support" section in your account and submit a support ticket. Provide as much detail as possible, including screenshots if needed.
+
+Question: What should I do if I don’t receive a response from a seller?
+Answer: If the seller isn’t responding, send a polite follow-up message. If you still don’t get a response, you can contact customer support for assistance.
+
+Question: How do I resolve disputes with buyers or sellers?
+Answer: If there’s a dispute, try to resolve it directly with the other party through the messaging system. If that fails, contact customer support, and they will mediate the issue.
