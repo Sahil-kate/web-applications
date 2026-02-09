@@ -1,0 +1,208 @@
+.home {
+  .features {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(29, 191, 115, 0.1) 0%, rgba(13, 8, 77, 0.1) 100%);
+      z-index: 1;
+    }
+
+    &.dark {
+      background: linear-gradient(135deg, #0d084d 0%, #1dbf73 100%);
+      color: white;
+
+      .container {
+        .item {
+          h1 {
+            background: linear-gradient(to right, #fff, #1dbf73);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+
+            i {
+              font-style: normal;
+              color: #1dbf73;
+            }
+          }
+
+          p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+          }
+
+          .title {
+            color: #fff;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+
+            img {
+              width: 24px;
+              height: 24px;
+            }
+          }
+
+          button {
+            background: #1dbf73;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(29, 191, 115, 0.3);
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 20px rgba(29, 191, 115, 0.4);
+            }
+          }
+        }
+      }
+    }
+
+    .container {
+      width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 100px;
+      position: relative;
+      z-index: 2;
+
+      .item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        &:first-child {
+          flex: 2;
+        }
+
+        &:last-child {
+          flex: 3;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #0d084d;
+          margin-bottom: 20px;
+          line-height: 1.2;
+        }
+
+        .title {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 1.2rem;
+          font-weight: 500;
+          color: #404145;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+        p {
+          font-size: 1.1rem;
+          color: #62646a;
+          line-height: 1.6;
+        }
+
+        video {
+          width: 100%;
+          border-radius: 15px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+
+          &:hover {
+            transform: translateY(-5px);
+          }
+        }
+      }
+    }
+  }
+
+  .explore {
+    padding: 100px 0;
+    background: #ffffff;
+
+    .container {
+      width: 1400px;
+      margin: 0 auto;
+
+      h1 {
+        font-size: 2.5rem;
+        color: #0d084d;
+        margin-bottom: 50px;
+        text-align: center;
+      }
+
+      .items {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 30px;
+
+        .item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 20px;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+          cursor: pointer;
+
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+            .line {
+              width: 50px;
+              background-color: #1dbf73;
+            }
+          }
+
+          img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+          }
+
+          .line {
+            width: 40px;
+            height: 2px;
+            background-color: #c5c6c9;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+          }
+
+          span {
+            font-weight: 500;
+            color: #404145;
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+  }
+}
