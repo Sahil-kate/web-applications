@@ -1,7 +1,39 @@
 {
+  "name": "fiverr-web-application",
+  "version": "1.0.0",
+  "description": "Full-featured freelance platform clone with React frontend and Node.js backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon api/server.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-deps": "npm install && cd client && npm install"
+  },
   "dependencies": {
     "framer-motion": "^12.4.7",
     "react-icons": "^5.5.0",
-    "react-toastify": "^11.0.5"
-  }
+    "react-toastify": "^11.0.5",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.0"
+  },
+  "keywords": [
+    "fiverr",
+    "freelance",
+    "marketplace",
+    "react",
+    "nodejs",
+    "mern"
+  ],
+  "author": "Sahil Kate",
+  "license": "MIT"
 }
